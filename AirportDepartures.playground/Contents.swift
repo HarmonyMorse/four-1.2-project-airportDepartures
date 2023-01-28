@@ -205,5 +205,8 @@ alertPassengers(depBoard: depBoard)
 //:
 //: f. Stretch: Use a [`NumberFormatter`](https://developer.apple.com/documentation/foundation/numberformatter) with the `currencyStyle` to format the amount in US dollars.
 
+func calculateAirfare(checkedBags: Int, distance: Int, travelers: Int) -> Double {
+    return Double(travelers)*(Double(checkedBags)*25+Double(distance)*0.1)
+}
 
-
+print("$\(calculateAirfare(checkedBags: 2, distance: 2000, travelers: 3))")
