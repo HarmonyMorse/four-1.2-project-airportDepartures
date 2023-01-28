@@ -156,8 +156,36 @@ printDepartures2(departureBoard: depBoard)
 //:
 //: f. Stretch: Display a custom message if the `terminal` is `nil`, tell the traveler to see the nearest information desk for more details.
 
+func alertPassengers(depBoard: DepartureBoard) {
+    for flight in depBoard.departures {
+        switch flight.status {
+        case .enRoute:
+            if let terminal = flight.terminal {
+                print("Your flight to \(flight.destination.city), \(flight.destination.country) is en route. Please go to terminal \(terminal).")
+            } else {
+                print("Your flight to \(flight.destination.city), \(flight.destination.country) is en route. We will update you when the terminal is decided.")
+            }
+        case .scheduled:
+            guard let time = flight.departureTime else { return }
+            if let terminal = flight.terminal {
+                print("Your flight to \(flight.destination.city), \(flight.destination.country) is scheduled for \(dateFormatter.string(from: time)). Please go to terminal \(terminal) to board.")
+            } else {
+                print("Your flight to \(flight.destination.city), \(flight.destination.country) is scheduled for \(dateFormatter.string(from: time)). We will update you when the terminal is decided.")
+            }
+        case .canceled:
+            print("Your flight to \(flight.destination.city), \(flight.destination.country) is canceled. Here is a $500,000,000 voucher.")
+        case .delayed:
+            guard let time = flight.departureTime else { return }
+            if let terminal = flight.terminal {
+                print("Your flight to \(flight.destination.city), \(flight.destination.country) is delayed. It is now coming at \(dateFormatter.string(from: time)). Please go to terminal \(terminal) to board.")
+            } else {
+                print("Your flight to \(flight.destination.city), \(flight.destination.country) is delayed. It is now coming at \(dateFormatter.string(from: time)). We will update you when the terminal is decided.")
+            }
+        }
+    }
+}
 
-
+alertPassengers(depBoard: depBoard)
 
 //: ## 6. Create a free-standing function to calculate your total airfair for checked bags and destination
 //: Use the method signature, and return the airfare as a `Double`
