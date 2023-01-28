@@ -17,7 +17,7 @@ import UIKit
 //:
 //: f. Use a class to represent a `DepartureBoard` with a list of departure flights, and the current airport
 
-enum FlightStatus {
+enum FlightStatus: String {
     case enRoute
     case scheduled
     case delayed
@@ -60,7 +60,7 @@ class DepartureBoard {
 //:
 //: e. Stretch: Look at the API for [`DateComponents`](https://developer.apple.com/documentation/foundation/datecomponents?language=objc) for creating a specific time
 
-let newYork = Airport(country: "USA", city: newYork, code: "JFK")
+let newYork = Airport(country: "USA", city: "New York", code: "JFK")
 let cairo = Airport(country: "Egypt", city: "Cairo", code: "CAI")
 let london = Airport(country: "England", city: "London", code: "LGW")
 let seattle = Airport(country: "USA", city: "Seattle", code: "SEA")
@@ -84,8 +84,24 @@ depBoard.departures.append(flight3)
 //:
 //: d. Print out the current DepartureBoard you created using the function
 
+func printDepartures(departureBoard: DepartureBoard) {
+    for departure in departureBoard.departures {
+        print("Flight \(departure.code) to \(departure.destination.city), \(departure.destination.country) (\(departure.destination.code))")
+        print("""
+Status: \(departure.status)
+Airline: \(departure.airline)
+""")
+        if let time = departure.departureTime {
+            print("Departure time: \(time)")
+        }
+        if let terminal = departure.terminal {
+            print("Terminal: \(terminal)")
+        }
+        print("___________________________")
+    }
+}
 
-
+printDepartures(departureBoard: depBoard)
 
 //: ## 4. Make a second function to print print an empty string if the `departureTime` is nil
 //: a. Createa new `printDepartures2(departureBoard:)` or modify the previous function
